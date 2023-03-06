@@ -1,14 +1,15 @@
 <template>
     <div class="grid grid-cols-2">
         <div>
-            <img src="@/assets/images/image-product-1.jpg" alt="main image" class="rounded-xl">
+            <img src="@/assets/images/image-product-1.jpg" alt="main image" class="rounded-xl"
+                :class="showImage ? '' : 'invisible'">
             <div class="grid grid-cols-4 gap-5 mt-5">
                 <div class="border-orange-500 border-transparent border-2 rounded-xl">
                     <img src="@/assets/images/image-product-1-thumbnail.jpg" alt="prod1 tumnail after main image"
-                        class="rounded-xl cursor-pointer opacity-40">
+                        class="rounded-xl cursor-pointer opacity-40" @click="switchImage">
                 </div>
                 <img src="@/assets/images/image-product-2-thumbnail.jpg" alt="prod2 tumnail after main image"
-                    class="rounded-xl cursor-pointer hover:opacity-40">
+                    class="rounded-xl cursor-pointer hover:opacity-40" @click="switchImage">
                 <img src="@/assets/images/image-product-3-thumbnail.jpg" alt="prod3 tumnail after main image"
                     class="rounded-xl cursor-pointer hover:opacity-40">
                 <img src="@/assets/images/image-product-4-thumbnail.jpg" alt="prod4 tumnail after main image"
@@ -36,7 +37,7 @@
                         <img src="@/assets/images/icon-minus.svg" alt="icon for minus sign">
                     </button>
                     <div class="px-7">
-                        {{ counter }}
+                        {{ this.counter }}
                     </div>
                     <button class="text-orange-500 font-bold px-2 h-[30px] hover:opacity-30" @click="increaseCounter">
                         <img src="@/assets/images/icon-plus.svg" alt="icon for plus sign">
@@ -49,8 +50,10 @@
                         <img src="@/assets/images/icon-cart.svg" alt=" icon cart for button" class="text-white">
                         Add to cart
                     </button>
+
                 </div>
             </div>
+            <p v-if="confirmationMess" class="text-gray-500 mb-5"> {{ confirmationMess }} </p>
         </div>
     </div>
 </template>
@@ -61,7 +64,9 @@ export default {
     data() {
         return {
             counter: 0,
-            product: {}
+            product: {},
+            confirmationMess: null,
+            showImage: true
         }
     },
     methods: {
@@ -76,12 +81,23 @@ export default {
             this.counter--;
         },
         saveInStorage() {
-            localStorage.setItem("counter", this.counter);
-            this.product = {
-                name: "Fall Limited Edition Sneakers",
-                price: 125.00,
+            if (this.counter > 0) {
+                this.confirmationMess = "Item succesfully added!";
+                this.$store.state.counter = this.counter;
+                this.product = {
+                    name: "Fall Limited Edition Sneakers",
+                    price: 125.00,
+                }
+                this.$store.state.product = this.product;
+                localStorage.setItem("product", JSON.stringify(this.product));
             }
-            localStorage.setItem("product", JSON.stringify(this.product));
+            if (this.counter === 0) {
+                alert("You must choose number!");
+            }
+            localStorage.setItem("counter", this.counter);
+        },
+        switchImage() {
+            this.showImage = !this.showImage;
         }
     }
 }
