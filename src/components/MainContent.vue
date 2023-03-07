@@ -1,8 +1,8 @@
 <template>
     <div class="grid grid-cols-2">
         <div>
-            <img src="@/assets/images/image-product-1.jpg" alt="main image" class="rounded-xl"
-                :class="showImage ? '' : 'invisible'">
+            <img src="@/assets/images/image-product-1.jpg" alt="main image" class="rounded-xl" :class="showImage ? '' : 'invisible'">
+            <!-- <img :src="imagePath" alt="main image" class="rounded-xl" :class="showImage ? '' : 'invisible'"> -->
             <div class="grid grid-cols-4 gap-5 mt-5">
                 <div class="border-orange-500 border-transparent border-2 rounded-xl">
                     <img src="@/assets/images/image-product-1-thumbnail.jpg" alt="prod1 tumnail after main image"
@@ -55,18 +55,21 @@
             </div>
             <p v-if="confirmationMess" class="text-gray-500 mb-5"> {{ confirmationMess }} </p>
         </div>
+        <!-- <cart-modal></cart-modal> -->
     </div>
 </template>
 
 <script>
-
+// import CartModal from './CartModal.vue';
 export default {
     data() {
         return {
             counter: 0,
             product: {},
             confirmationMess: null,
-            showImage: true
+            showImage: true,
+            publicPath: window.location.origin,
+            imagePath: `../assets/images/product-image-1.jpg`
         }
     },
     methods: {

@@ -6,6 +6,7 @@ const store = createStore({
       return {
         counter: 0,
         product: {},
+        openCart: false
       };
     },
   });

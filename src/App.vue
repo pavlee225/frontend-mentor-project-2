@@ -15,6 +15,7 @@
 
 <script>
 import NavBar from './components/NavBar.vue';
+
 // import MainContent from './components/MainContent.vue'
 // import HomePage from "@/pages/HomePage.vue"
 // import CheckOut from "./pages/CheckOut.vue";

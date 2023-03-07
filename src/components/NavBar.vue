@@ -23,7 +23,7 @@
                         @click="toggleCart">
                     <span class="sr-only">Notifications</span>
                     <div
-                        class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-orange-400 border-2 border-white rounded-full -top-2 -right-2">
+                        class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-orange-400 border-2 border-white rounded-full -top-1 -right-1">
                         {{ $store.state.counter }}</div>
                 </button>
             </div>
@@ -36,14 +36,13 @@
                         <div class="flex flex-row gap-5 items-center mt-5">
                             <div>
                                 <img src="@/assets/images/image-product-1-thumbnail.jpg"
-                                    style="width: 100px; height: 100px;" />
+                                    style="width: 60px; height: 60px;" />
                             </div>
                             <div>
                                 <p>{{ this.product.name }}</p>
-                                <p>${{ this.product.price }} x {{ this.counter }} <span
-                                        class="font-bold">${{
-                                            this.product.price * this.counter
-                                        }}</span></p>
+                                <p>${{ this.product.price }} x {{ this.counter }} <span class="font-bold">${{
+                                    this.product.price * this.counter
+                                }}</span></p>
                             </div>
                             <div>
                                 <img src="@/assets/images/icon-delete.svg" class="cursor-pointer"
@@ -53,11 +52,13 @@
                         <!-- <button class="rounded bg-orange-500 text-white px-6 mt-3 py-2 w-6/12 m-auto mb-3"
                             @click="toggleCart">Checkout</button> -->
                         <router-link to="/checkout"
-                            class="rounded bg-orange-500 text-white px-6 mt-3 py-2 w-6/12 m-auto mb-3" @click="toggleCart">Checkout</router-link>
+                            class="rounded bg-orange-500 text-white px-6 mt-3 py-2 w-10/12 m-auto mb-3 text-center"
+                            @click="toggleCart">Checkout</router-link>
                     </div>
                 </div>
             </div>
             <div v-if="openCart" class="absolute z-40 inset-0 opacity-25 bg-black"></div>
+            <!-- <cart-modal openCart="true"></cart-modal> -->
             <div class="w-[50px]">
                 <img src="@/assets/images/image-avatar.png" alt="avatar image in navbar"
                     class="cursor-pointer hover:border-orange-500 border-transparent border-2 rounded-full" />
@@ -67,9 +68,12 @@
 </template>
 
 <script>
-
+// import CartModal from './CartModal.vue';
 
 export default {
+    // components: {
+    //     CartModal
+    // },
     data() {
         return {
             counter: 0,
@@ -84,6 +88,7 @@ export default {
     methods: {
         toggleCart() {
             if (this.$store.state.counter > 0) {
+                this.$store.state.openCart = this.openCart;
                 this.openCart = !this.openCart;
             } else {
                 this.openCart = false;
